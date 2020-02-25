@@ -8,6 +8,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -34,5 +35,12 @@ class AnagramServiceImplTest {
     @CsvSource({"we,dfe", "dsf 1,sd", "dd,aa", "abc def,abcdef"})
     void shouldReturnFalse(String str1, String str2) {
         assertFalse(service.isAnagram(str1, str2));
+    }
+
+    @Test
+    void shouldGetAllAnagrams() {
+        assertThat(service.getAllAnagrams("astt")).isEmpty();
+        assertThat(service.getAllAnagrams("cinema")).containsExactlyInAnyOrder("anemic", "iceman");
+        assertThat(service.getAllAnagrams("stop")).containsExactlyInAnyOrder("post", "pots", "spot", "tops");
     }
 }
